@@ -53,7 +53,7 @@ if (/document\.cookie/.test(body)) fail("L6", "page sets cookies");
 
 // Visible text for the copy rules.
 const text = beforeFooter
-  .replace(/<(script|style|template)\b[\s\S]*?<\/\1>/gi, " ")
+  .replace(/<(script|style|template|title)\b[\s\S]*?<\/\1>/gi, " ")
   .replace(/<\/(p|h[1-6]|li|dt|dd|summary|div|section)>/gi, ". ")
   .replace(/<[^>]+>/g, " ")
   .replace(/&[a-z#0-9]+;/gi, " ")
@@ -70,7 +70,7 @@ const found = superlatives.filter((w) => new RegExp(`\\b${w}\\b`, "i").test(text
 if (found.length) fail("C3", `superlatives without proof: ${found.join(", ")}`);
 
 // C2 — reading level (Flesch-Kincaid grade). Target 7 or lower; heuristic, so fail only above 8.
-const sentences = text.split(/[.!?]+/).map((s) => s.trim()).filter((s) => /[a-z]/i.test(s));
+const sentences = text.replace(/(\d)\.(\d)/g, "$1$2").split(/[.!?]+/).map((s) => s.trim()).filter((s) => /[a-z]/i.test(s));
 const words = text.match(/[A-Za-z][A-Za-z'’-]*/g) ?? [];
 const syllables = (w) => Math.max(1, (w.toLowerCase().replace(/(?:es|ed|e)$/, "").match(/[aeiouy]+/g) ?? []).length);
 if (words.length > 30) {
