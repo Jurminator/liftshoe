@@ -4,3 +4,5 @@ node_modules/
 # Claude Code
 .claude/worktrees/
 .claude/settings.local.json
+# Local single-file previews
+preview/

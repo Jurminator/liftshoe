@@ -1,0 +1,97 @@
+/* Liftshoe — one stylesheet, system fonts, no framework. Colour tokens are contrast-checked by scripts/check-page.mjs. */
+:root {
+  --bg: #fdf8f0;
+  --surface: #f4ead9;
+  --text: #141a33;
+  --muted: #4a5168;
+  --accent: #b03512;
+  --cta-bg: #b03512;
+  --cta-text: #ffffff;
+  --radius: 14px;
+  --gap: clamp(1rem, 3vw, 2rem);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: 5rem; /* room for the sticky button on phones */
+}
+
+h1, h2, h3 { line-height: 1.15; margin: 0 0 0.6em; text-wrap: balance; }
+h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); letter-spacing: -0.02em; }
+h3 { font-size: 1.2rem; }
+p { margin: 0 0 1em; }
+
+.wrap { width: min(100% - 2rem, 68rem); margin-inline: auto; padding-block: clamp(2.5rem, 7vw, 5rem); }
+.narrow { max-width: 42rem; }
+.band { background: var(--surface); }
+
+/* Hero */
+.hero-grid { display: grid; gap: var(--gap); align-items: center; }
+.brand { font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.lead { font-size: 1.25rem; max-width: 34rem; }
+.hero-art { width: 100%; height: auto; border-radius: var(--radius); display: block; }
+.points { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.points li { background: var(--surface); border-radius: 999px; padding: 0.35rem 0.9rem; font-weight: 600; font-size: 0.95rem; }
+.reassure, .small { color: var(--muted); font-size: 0.95rem; margin-top: 0.75rem; }
+
+/* The one action */
+.button {
+  display: inline-block;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-decoration: none;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  min-height: 48px;
+}
+.button:hover { filter: brightness(1.08); }
+.button:focus-visible, summary:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+/* Steps */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--gap); counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--text); color: var(--bg); font-weight: 800; margin-bottom: 0.75rem; }
+
+/* Offer */
+.offer { text-align: center; }
+.stack { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.stack li { padding: 0.6rem 0; border-bottom: 1px solid rgb(20 26 51 / 0.15); font-weight: 600; }
+.price { font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+.price span { font-size: 1rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+
+/* FAQ */
+details { border-bottom: 1px solid rgb(20 26 51 / 0.15); padding: 0.9rem 0; }
+summary { cursor: pointer; font-weight: 700; min-height: 24px; }
+details p { margin: 0.6rem 0 0; }
+
+.final { text-align: center; }
+.final .hero-art { margin-bottom: 2rem; }
+.footer { color: var(--muted); font-size: 0.9rem; }
+.footer .wrap { padding-block: 2rem; }
+
+/* Phones: button always within reach */
+.sticky { position: fixed; inset: auto 0 0 0; padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid rgb(20 26 51 / 0.15); text-align: center; }
+.sticky .button { display: block; }
+
+@media (min-width: 48rem) {
+  body { padding-bottom: 0; }
+  .sticky { display: none; }
+  .hero-grid { grid-template-columns: 1.1fr 1fr; }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
