@@ -22,7 +22,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  padding-bottom: 5rem; /* room for the sticky button on phones */
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom)); /* room for the sticky button on phones */
 }
 
 h1, h2, h3 { line-height: 1.15; margin: 0 0 0.6em; text-wrap: balance; }
