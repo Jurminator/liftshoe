@@ -11,6 +11,10 @@ const warnings = [];
 const fail = (id, msg) => failures.push(`${id} ${msg}`);
 const warn = (id, msg) => (release ? failures : warnings).push(`${id} ${msg}`);
 
+if (!existsSync(htmlPath)) {
+  console.log(`FAIL ${htmlPath} is missing`);
+  process.exit(1);
+}
 const html = readFileSync(htmlPath, "utf8");
 const body = html.replace(/<!--[\s\S]*?-->/g, "");
 const beforeFooter = body.split(/<footer[\s>]/i)[0];
@@ -21,24 +25,29 @@ if (placeholders.length) warn("L7", `placeholders left: ${[...new Set(placeholde
 if (/lorem ipsum/i.test(body)) fail("L7", "lorem ipsum text found");
 
 // S1 — one action: every buy button goes to the same place.
-const ctas = [...body.matchAll(/<a\b[^>]*\bdata-cta\b[^>]*>/gi)].map((m) => (m[0].match(/href="([^"]*)"/i) || [])[1]);
+const ctas = [...body.matchAll(/<a\b[^>]*\bdata-cta\b[^>]*>/gi)].map((m) => (m[0].match(/href\s*=\s*(["'])(.*?)\1/i) || [])[2] ?? "");
 const ctaTargets = [...new Set(ctas)];
 if (ctas.length === 0) warn("S1", "no buy button (an <a data-cta>) on the page");
 if (ctaTargets.length > 1) fail("S1", `buy buttons point to different places: ${ctaTargets.join(", ")}`);
 if (ctas.length && !/^https:\/\//.test(ctaTargets[0] ?? "")) warn("S1", `buy link is not a real https address: "${ctaTargets[0]}"`);
 
 // S2 — no exits before the footer other than the buy link.
-const exits = [...beforeFooter.matchAll(/<a\b[^>]*href="(https?:\/\/[^"]+)"/gi)].map((m) => m[1]).filter((h) => !ctaTargets.includes(h));
+const exits = [...beforeFooter.matchAll(/<a\b[^>]*href\s*=\s*["']((?:https?:)?\/\/[^"']+)["']/gi)].map((m) => m[1]).filter((h) => !ctaTargets.includes(h));
 if (exits.length) fail("S2", `outbound links above the footer: ${exits.join(", ")}`);
 if (/<nav[\s>]/i.test(beforeFooter)) fail("S2", "navigation menu found above the footer");
 
 // T4 — host-neutral: relative paths only, so the page works under /liftshoe/ and on any other host.
-const rooted = [...body.matchAll(/\b(?:href|src)="(\/[^"/][^"]*)"/gi)].map((m) => m[1]);
+// Also catches protocol-relative //host/… links and url(/…) in CSS.
+const css = existsSync(cssPath) ? readFileSync(cssPath, "utf8") : "";
+const rooted = [
+  ...[...body.matchAll(/\b(?:href|src|srcset|poster)\s*=\s*["'](\/[^"']*)["']/gi)].map((m) => m[1]),
+  ...[...(body + css).matchAll(/url\(\s*["']?(\/[^"')]*)/gi)].map((m) => m[1]),
+];
 if (rooted.length) fail("T4", `root-absolute paths break on project sites: ${rooted.join(", ")}`);
 
 // L6 — no third-party scripts (no cookies, no trackers) unless allow-listed here.
 const allowedScripts = [];
-const scripts = [...body.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)].map((m) => m[1]).filter((s) => /^https?:/.test(s) && !allowedScripts.includes(s));
+const scripts = [...body.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/gi)].map((m) => m[1]).filter((s) => /^(https?:)?\/\//.test(s) && !allowedScripts.includes(s));
 if (scripts.length) fail("L6", `third-party scripts: ${scripts.join(", ")}`);
 if (/document\.cookie/.test(body)) fail("L6", "page sets cookies");
 
@@ -73,10 +82,9 @@ if (words.length > 30) {
 }
 
 // L5 — colour contrast of the design tokens in styles.css (WCAG AA: 4.5 for text).
-if (existsSync(cssPath)) {
-  const css = readFileSync(cssPath, "utf8");
+if (css) {
   const root = (css.match(/:root\s*{([^}]*)}/) || [])[1] ?? "";
-  const token = Object.fromEntries([...root.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6})\b/gi)].map((m) => [m[1], m[2]]));
+  const token = Object.fromEntries([...root.matchAll(/--([\w-]+):\s*(#(?:[0-9a-f]{6}|[0-9a-f]{3}))\b/gi)].map((m) => [m[1], m[2].length === 4 ? "#" + [...m[2].slice(1)].map((c) => c + c).join("") : m[2]]));
   const lum = (hex) => {
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
