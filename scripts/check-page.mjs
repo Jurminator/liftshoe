@@ -32,6 +32,13 @@ if (ctaTargets.length > 1) fail("S1", `buy buttons point to different places: ${
 // An email order link is accepted as a stopgap until a checkout exists (approved fact Q1).
 if (ctas.length && !/^(https:\/\/|mailto:)/.test(ctaTargets[0] ?? "")) warn("S1", `buy link is not a real https or mailto address: "${ctaTargets[0]}"`);
 
+// An email buy link must go to an address the owner approved.
+if (/^mailto:/.test(ctaTargets[0] ?? "")) {
+  const address = ctaTargets[0].slice(7).split("?")[0];
+  const facts = existsSync("docs/approved-facts.md") ? readFileSync("docs/approved-facts.md", "utf8") : "";
+  if (!address || !facts.includes(address)) fail("S1", `buy link emails "${address}", which is not in docs/approved-facts.md`);
+}
+
 // S2 — no exits before the footer other than the buy link.
 const exits = [...beforeFooter.matchAll(/<a\b[^>]*href\s*=\s*["']((?:https?:)?\/\/[^"']+)["']/gi)].map((m) => m[1]).filter((h) => !ctaTargets.includes(h));
 if (exits.length) fail("S2", `outbound links above the footer: ${exits.join(", ")}`);
