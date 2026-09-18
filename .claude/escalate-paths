@@ -1,0 +1,7 @@
+# Extra paths in THIS repo that always need a human review (extended regex, one per line).
+# Defaults (auth, payments, migrations, infra, CI, CLAUDE.md, dependencies, …) are built into .github/scripts/pr-risk.sh
+# examples:
+# ^src/pricing/
+# ^supabase/policies/
+# Site copy and claims are legally sensitive (playbook-landing-pages, LEGAL items)
+^docs/approved-facts\.md$

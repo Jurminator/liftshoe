@@ -1,0 +1,85 @@
+name: Claude PR Review
+# Agent review gate:
+#   1. deterministic risk check (script, not an LLM)         -> low | high
+#   2. Claude reviews in a fresh context against CLAUDE.md + the spec -> APPROVE | ESCALATE
+#   3. low risk + APPROVE  -> label "agent-approved" (and auto-merge if repo variable AGENT_AUTOMERGE == 'true')
+#      anything else       -> label "needs-human", PR assigned to the repo owner
+# Required checks (tests/lint) stay the hard gate: enable branch protection so nothing merges red.
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deterministic risk check
+        id: risk
+        run: |
+          .github/scripts/pr-risk.sh "origin/${{ github.base_ref }}" | tee risk.txt
+          echo "risk=$(grep '^risk=' risk.txt | cut -d= -f2)" >> "$GITHUB_OUTPUT"
+          gh label create agent-approved --color 0E8A16 --description "Agent review passed, low risk" --force
+          gh label create needs-human   --color D93F0B --description "Escalated to a human reviewer" --force
+          gh pr edit "$PR" --remove-label agent-approved --remove-label needs-human || true
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh pr edit:*),Bash(cat risk.txt),Read,Grep,Glob"'
+          prompt: |
+            You are the review gate for PR #${{ github.event.pull_request.number }}. You did not write this code; review it cold.
+            Read CLAUDE.md, the spec in docs/specs/ that the PR references (if any), and risk.txt (deterministic risk result).
+
+            Review, most severe first, reporting only findings you are confident in:
+            1. correctness bugs and unhandled failure cases
+            2. security (secrets, injection, authz, unsafe handling of untrusted input)
+            3. conformance to the spec and to the architecture/conventions in CLAUDE.md; flag code far larger than the problem needs
+            4. tests: is the changed behaviour actually verified?
+            Skip style nits.
+
+            Then decide:
+            - ESCALATE if: any finding of type 1–3 that is not trivially fixable, the PR does something the spec did not ask for,
+              you could not understand part of the change, you are less than ~90% confident it is safe, or risk.txt says risk=high.
+            - otherwise APPROVE.
+
+            Post ONE PR comment, in this order:
+            - first line `Verdict: APPROVE` or `Verdict: ESCALATE`
+            - `## For the owner` — the owner is NOT a programmer. In plain business language, max 100 words: what changes
+              for users, why this needs a human decision, the 2–3 options with their consequence (cost, risk, reversible or not),
+              and your recommendation with confidence. No file names, no jargon.
+            - `## For the agents` — technical findings with file:line, short.
+            Finally run exactly one of:
+              gh pr edit ${{ github.event.pull_request.number }} --add-label agent-approved
+              gh pr edit ${{ github.event.pull_request.number }} --add-label needs-human
+            Never add agent-approved when risk.txt says risk=high.
+
+      - name: Enforce gate
+        run: |
+          labels=$(gh pr view "$PR" --json labels -q '.labels[].name')
+          if [[ "${{ steps.risk.outputs.risk }}" != "low" ]] || ! grep -qx agent-approved <<< "$labels" || grep -qx needs-human <<< "$labels"; then
+            gh pr edit "$PR" --remove-label agent-approved --add-label needs-human --add-assignee "${{ github.repository_owner }}" || true
+            echo "Escalated to human."; exit 0
+          fi
+          if [[ "${{ vars.AGENT_AUTOMERGE }}" == "true" ]]; then
+            gh pr merge "$PR" --auto --squash && echo "Auto-merge armed: merges when required checks pass."
+          else
+            echo "Agent-approved. Auto-merge is off (set repo variable AGENT_AUTOMERGE=true to enable)."
+          fi
