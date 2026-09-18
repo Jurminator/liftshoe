@@ -10,12 +10,13 @@ Status: **confirmed** = may be used · **needs evidence** = may be used only aft
 | F1 | Name: Liftshoe | confirmed | owner, 2026-09-18 |
 | F2 | What it is: a compact inflatable shoe set that lets smaller people see the acts at concerts | confirmed | owner, 2026-09-18 |
 | F3 | Price: $19.99 per pair (USD) | confirmed | owner, 2026-09-18 |
-| F4 | Adds 19.99 cm of height | **needs evidence** — a performance claim; the owner must confirm it was measured on the real product (inflated, with a person standing on it) before it is published | owner, 2026-09-18 |
+| F4 | Adds 19.99 cm of height | confirmed — owner states it was measured on the real product; owner keeps the measurement record | owner, 2026-09-18 |
 | F5 | The buyer inflates it themselves | confirmed | owner, 2026-09-18 |
 | F6 | Arrives very flat; fits in a back pocket | confirmed | owner, 2026-09-18 |
 | F7 | Inflation: you blow on the nozzle; it takes 1 minute | confirmed | owner, 2026-09-18 |
 | F8 | In the box: one pair of Liftshoe, nothing else | confirmed | owner, 2026-09-18 |
-| F9 | Returns promise: "Not used? Money back." (no time limit stated yet — see Q6) | confirmed | owner, 2026-09-18 |
+| F9 | Returns promise: "Not used? Money back", within 30 days | confirmed | owner, 2026-09-18 |
+| F13 | Ordering: by email to taller@liftshoe.nl for now, until a checkout exists | confirmed | owner, 2026-09-18 |
 | F10 | No shipping cost | confirmed | owner, 2026-09-18 |
 | F11 | Also available at premium concert locations (which ones: not stated; the page names none) | confirmed | owner, 2026-09-18 |
 | F12 | Seller: Liftshoe BV, Amsterdam. Contact: taller@liftshoe.nl | confirmed | owner, 2026-09-18 |
@@ -23,11 +24,11 @@ Status: **confirmed** = may be used · **needs evidence** = may be used only aft
 ## Open — page says nothing about these until filled in
 | # | Question | Why it matters |
 |---|---|---|
-| Q1 | Checkout link | The buy button needs a real destination; blocks going live |
+| Q1 | Checkout link (stopgap: email orders, F13) | Replace the email link with a real checkout when available |
 | Q2 | Maximum weight, shoe types and sizes it fits | Safety claim; also the most likely customer question |
 | Q3 | Stability / safe-use guidance (standing in a crowd on ~20 cm of inflated platform) | Safety; liability. No stability or safety claims until tested |
 | Q4 | How it attaches to the shoe (inflation answered: F7) | "How it works" section. Page says nothing about attachment until known |
-| Q6 | Returns: within how many days, and how to send it back (promise itself answered: F9) | Shoppers will ask; EU online sales carry a legal 14-day right of withdrawal the seller should check |
+| Q6 | Returns: how to send it back (promise and 30 days answered: F9) | Shoppers will ask; EU online sales carry a legal 14-day right of withdrawal the seller should check |
 | Q7 | Shipping: which countries, delivery time (cost answered: F10) | Left to the checkout until known |
 | Q9 | Real proof: reviews, press, customer numbers, founder story | Being collected (owner, 2026-09-18). Until real: no reviews, ratings, logos or counts on the page |
 | Q10 | Real constraints (launch date, limited first batch) | Without one the page carries no urgency or scarcity |

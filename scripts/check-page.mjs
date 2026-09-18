@@ -29,7 +29,8 @@ const ctas = [...body.matchAll(/<a\b[^>]*\bdata-cta\b[^>]*>/gi)].map((m) => (m[0
 const ctaTargets = [...new Set(ctas)];
 if (ctas.length === 0) warn("S1", "no buy button (an <a data-cta>) on the page");
 if (ctaTargets.length > 1) fail("S1", `buy buttons point to different places: ${ctaTargets.join(", ")}`);
-if (ctas.length && !/^https:\/\//.test(ctaTargets[0] ?? "")) warn("S1", `buy link is not a real https address: "${ctaTargets[0]}"`);
+// An email order link is accepted as a stopgap until a checkout exists (approved fact Q1).
+if (ctas.length && !/^(https:\/\/|mailto:)/.test(ctaTargets[0] ?? "")) warn("S1", `buy link is not a real https or mailto address: "${ctaTargets[0]}"`);
 
 // S2 — no exits before the footer other than the buy link.
 const exits = [...beforeFooter.matchAll(/<a\b[^>]*href\s*=\s*["']((?:https?:)?\/\/[^"']+)["']/gi)].map((m) => m[1]).filter((h) => !ctaTargets.includes(h));
