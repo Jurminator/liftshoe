@@ -13,6 +13,12 @@ Status: **confirmed** = may be used · **needs evidence** = may be used only aft
 | F4 | Adds 19.99 cm of height | **needs evidence** — a performance claim; the owner must confirm it was measured on the real product (inflated, with a person standing on it) before it is published | owner, 2026-09-18 |
 | F5 | The buyer inflates it themselves | confirmed | owner, 2026-09-18 |
 | F6 | Arrives very flat; fits in a back pocket | confirmed | owner, 2026-09-18 |
+| F7 | Inflation: you blow on the nozzle; it takes 1 minute | confirmed | owner, 2026-09-18 |
+| F8 | In the box: one pair of Liftshoe, nothing else | confirmed | owner, 2026-09-18 |
+| F9 | Returns promise: "Not used? Money back." (no time limit stated yet — see Q6) | confirmed | owner, 2026-09-18 |
+| F10 | No shipping cost | confirmed | owner, 2026-09-18 |
+| F11 | Also available at premium concert locations (which ones: not stated; the page names none) | confirmed | owner, 2026-09-18 |
+| F12 | Seller: Liftshoe BV, Amsterdam. Contact: taller@liftshoe.nl | confirmed | owner, 2026-09-18 |
 
 ## Open — page says nothing about these until filled in
 | # | Question | Why it matters |
@@ -20,11 +26,9 @@ Status: **confirmed** = may be used · **needs evidence** = may be used only aft
 | Q1 | Checkout link | The buy button needs a real destination; blocks going live |
 | Q2 | Maximum weight, shoe types and sizes it fits | Safety claim; also the most likely customer question |
 | Q3 | Stability / safe-use guidance (standing in a crowd on ~20 cm of inflated platform) | Safety; liability. No stability or safety claims until tested |
-| Q4 | How it inflates (mouth valve, pump included?), how long it takes, how it attaches to the shoe | "How it works" section; speed and ease are core to the offer |
-| Q5 | What is in the box (pair only? pump? pouch? repair patch?) | Offer stack before the price |
-| Q6 | Returns / guarantee the owner will honour | Most shoppers look for it; sits next to the buy button |
-| Q7 | Shipping: where, how long, cost | Full-price rule: mandatory costs may not be hidden until checkout |
-| Q8 | Seller identity and contact email | Trust footer; legally expected |
+| Q4 | How it attaches to the shoe (inflation answered: F7) | "How it works" section. Page says nothing about attachment until known |
+| Q6 | Returns: within how many days, and how to send it back (promise itself answered: F9) | Shoppers will ask; EU online sales carry a legal 14-day right of withdrawal the seller should check |
+| Q7 | Shipping: which countries, delivery time (cost answered: F10) | Left to the checkout until known |
 | Q9 | Real proof: reviews, press, customer numbers, founder story | Being collected (owner, 2026-09-18). Until real: no reviews, ratings, logos or counts on the page |
 | Q10 | Real constraints (launch date, limited first batch) | Without one the page carries no urgency or scarcity |
 | Q11 | What the real product looks like (photo or description) | Images must not misrepresent the product |
