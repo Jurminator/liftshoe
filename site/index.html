@@ -3,13 +3,149 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex">
-    <title>Liftshoe</title>
+    <title>Liftshoe — see the whole show</title>
+    <meta name="description" content="Liftshoe is a pair of inflatable lifts for your shoes. Flat in your pocket on the way in. Taller when the music starts. $19.99 per pair.">
+    <link rel="canonical" href="https://jurminator.github.io/liftshoe/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Liftshoe — see the whole show">
+    <meta property="og:description" content="Inflatable lifts for your shoes. Flat in your pocket on the way in. Taller when the music starts.">
+    <meta property="og:url" content="https://jurminator.github.io/liftshoe/">
+    <meta property="og:image" content="https://jurminator.github.io/liftshoe/img/hero.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Liftshoe",
+        "description": "A compact inflatable shoe set that lets smaller people see the acts at concerts.",
+        "image": "https://jurminator.github.io/liftshoe/img/hero.jpg",
+        "offers": { "@type": "Offer", "price": "19.99", "priceCurrency": "USD" }
+      }
+    </script>
   </head>
   <body>
     <main>
-      <h1>Liftshoe</h1>
-      <p>Coming soon.</p>
+      <!-- 1. Hero: dream outcome, how, button, three selling points (facts F2 F3 F4 F5 F6) -->
+      <header class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="brand">Liftshoe</p>
+            <h1>See the whole show.</h1>
+            <p class="lead" data-todo="[[TODO: owner confirms 19.99 cm was measured on the real product (fact F4)]]">
+              Liftshoe is a pair of inflatable lifts for your shoes. Flat in your pocket on the way in. 19.99&nbsp;cm taller when the music starts.
+            </p>
+            <a class="button" data-cta href="#buy" data-todo="[[TODO: checkout link (Q1)]]">Get your pair — $19.99</a>
+            <p class="reassure">Not used? Money back. Free shipping.</p>
+            <ul class="points">
+              <li>Fits in your back pocket</li>
+              <li>You inflate it yourself</li>
+              <li>$19.99 per pair</li>
+            </ul>
+          </div>
+          <img class="hero-art" src="img/hero.jpg" width="1200" height="900" alt="Illustration: a short fan stands a head taller in a concert crowd and sees the stage.">
+        </div>
+      </header>
+
+      <!-- 2. Problem: the moment the buyer already knows (F2) -->
+      <section class="wrap narrow">
+        <h2>You paid for the ticket. You saw the back of a head.</h2>
+        <p>If you are on the short side, you know the drill. You go up on your toes. You lean left, then right. You end up watching the big screen, or a phone held up in front of you.</p>
+        <p>The band is right there. You just can't see them.</p>
+        <p>You can't move the crowd. You can change how tall you stand in it.</p>
+      </section>
+
+      <!-- 3. How it works: speed and ease made concrete (F5 F6; Q4 open) -->
+      <section class="band">
+        <div class="wrap">
+          <h2>How it works</h2>
+          <ol class="steps">
+            <li>
+              <h3>Pocket it</h3>
+              <p>Liftshoe comes flat. It slips into a back pocket.</p>
+            </li>
+            <li>
+              <h3>Inflate it</h3>
+              <p>Blow on the nozzle. It takes one minute. No pump to carry.</p>
+            </li>
+            <li>
+              <h3>Step up and see</h3>
+              <p>Step up. Now the view is yours.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 4. Proof, honest v1. Real reviews go here once collected (Q9). Never invent them.
+           Slot template for later:
+           <figure class="review"><blockquote>REAL QUOTE</blockquote><figcaption>REAL NAME, city — verified buyer, DATE</figcaption></figure>
+      -->
+      <section class="wrap narrow">
+        <h2>New, and honest about it</h2>
+        <p>Liftshoe is a new product. We have no reviews to show you yet, and we won't make any up. When real fans have worn it to real shows, their words will go here.</p>
+        <p>Until then, this is our promise. Not used? Money back.</p>
+      </section>
+
+      <!-- 5. Offer: everything included, then price, then guarantee, then button (F3; Q5 Q6 Q7 open) -->
+      <section class="band" id="buy">
+        <div class="wrap narrow offer">
+          <h2>What you get</h2>
+          <ul class="stack">
+            <li>One pair of Liftshoe inflatable lifts</li>
+            <li>Free shipping</li>
+            <li>Not used? Money back</li>
+          </ul>
+          <p class="price">$19.99 <span>per pair</span></p>
+          <p class="small">No shipping cost. Also sold at some concert venues.</p>
+          <a class="button" data-cta href="#buy">Get your pair — $19.99</a>
+          <p class="reassure">Not used? Money back. Free shipping.</p>
+        </div>
+      </section>
+
+      <!-- 6. FAQ: the real objections. Safety answers only after testing (Q2 Q3). -->
+      <section class="wrap narrow">
+        <h2>Questions</h2>
+        <details>
+          <summary>How much taller will I be?</summary>
+          <p data-todo="[[TODO: owner confirms 19.99 cm was measured on the real product (fact F4)]]">Liftshoe adds 19.99&nbsp;cm.</p>
+        </details>
+        <details>
+          <summary>Does it really fit in a pocket?</summary>
+          <p>Yes. It comes flat, small enough for a back pocket.</p>
+        </details>
+        <details>
+          <summary>How do I inflate it?</summary>
+          <p>You blow on the nozzle. It takes one minute.</p>
+        </details>
+        <details>
+          <summary>Can I send it back?</summary>
+          <p>Yes. Not used? Money back. Write to taller@liftshoe.nl.</p>
+        </details>
+        <details>
+          <summary>What does shipping cost?</summary>
+          <p>Nothing. Shipping is free. Liftshoe is also sold at some concert venues.</p>
+        </details>
+      </section>
+
+      <!-- 7. Final call to action -->
+      <section class="wrap narrow final">
+        <img class="hero-art" src="img/view.jpg" width="1200" height="900" loading="lazy" alt="Illustration: a clear view of the band on stage, over the heads of the crowd.">
+        <h2>Next show, see all of it.</h2>
+        <a class="button" data-cta href="#buy">Get your pair — $19.99</a>
+      </section>
     </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <p>Liftshoe BV, Amsterdam · <a href="mailto:taller@liftshoe.nl">taller@liftshoe.nl</a></p>
+        <p>The pictures on this page are illustrations, not photos of the product.</p>
+      </div>
+    </footer>
+
+    <!-- Mobile: the buy button is always within reach -->
+    <div class="sticky">
+      <a class="button" data-cta href="#buy">Get your pair — $19.99</a>
+    </div>
   </body>
 </html>
