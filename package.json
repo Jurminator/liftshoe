@@ -1,0 +1,20 @@
+{
+  "name": "liftshoe",
+  "private": true,
+  "description": "Liftshoe landing page — plain HTML/CSS, hosted as static files",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "npm run check:html && npm run check:links && npm run check:page",
+    "check:release": "npm run check:html && npm run check:links && node scripts/check-page.mjs --release",
+    "check:html": "html-validate \"site/**/*.html\"",
+    "check:links": "linkinator site --recurse --skip \"^https?://(?!localhost)\" --silent",
+    "check:page": "node scripts/check-page.mjs"
+  },
+  "devDependencies": {
+    "html-validate": "^9.0.0",
+    "linkinator": "^6.0.0"
+  }
+}
